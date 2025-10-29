@@ -4,8 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: sdwan-cidr
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
