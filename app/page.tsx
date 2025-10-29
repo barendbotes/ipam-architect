@@ -43,6 +43,7 @@ export default function Home() {
   const [supernet, setSupernet] = useState("10.0.0.0/8");
   const [regionCount, setRegionCount] = useState(4);
   const [subRegionsPerRegion, setSubRegionsPerRegion] = useState(2);
+  const [sitesNeeded, setSitesNeeded] = useState(1000);
   const [vlansPerSite, setVlansPerSite] = useState(5);
   const [vlanSize, setVlanSize] = useState(24);
   const [result, setResult] = useState<AllocationResult | null>(null);
@@ -86,7 +87,7 @@ export default function Home() {
         subRegionsPerRegion,
         vlansPerSite,
         vlanSize,
-        totalSitesNeeded: 1000,
+        totalSitesNeeded: sitesNeeded,
         growthMultiplier: 3,
       });
 
@@ -117,27 +118,29 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <div className="container mx-auto p-4 md:p-8 space-y-6 max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+      <div className="container mx-auto p-4 md:p-8 space-y-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center space-y-2 py-6">
+        <div className="text-center space-y-4 py-8">
           <div className="flex items-center justify-center gap-3">
-            <Network className="w-10 h-10 text-blue-600" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+              <Network className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Network Subnet Design Tool
             </h1>
           </div>
-          <p className="text-muted-foreground">
-            Design hierarchical IP address allocation for global deployments
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Design hierarchical IP address allocation for global deployments with intelligent capacity planning
           </p>
         </div>
 
         {/* Configuration Card */}
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Network className="w-5 h-5" />
-              Configuration
+        <Card className="shadow-xl border-2 border-blue-100 dark:border-blue-900/50">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700">
+            <CardTitle className="flex items-center gap-2 text-xl">
+              <Network className="w-6 h-6 text-blue-600" />
+              Network Configuration
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -192,9 +195,9 @@ export default function Home() {
             </div>
 
             {/* Grid Configuration */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-2">
-                <Label>Number of Regions</Label>
+                <Label className="text-sm font-semibold">Number of Regions</Label>
                 <Input
                   type="number"
                   min={1}
@@ -203,6 +206,7 @@ export default function Home() {
                   onChange={(e) =>
                     updateRegionCount(parseInt(e.target.value) || 1)
                   }
+                  className="border-2 focus:border-blue-500"
                 />
                 <p className="text-xs text-muted-foreground">
                   Geographic regions (max 6)
@@ -210,7 +214,7 @@ export default function Home() {
               </div>
 
               <div className="space-y-2">
-                <Label>Territories per Region</Label>
+                <Label className="text-sm font-semibold">Territories per Region</Label>
                 <Input
                   type="number"
                   min={1}
@@ -219,6 +223,7 @@ export default function Home() {
                   onChange={(e) =>
                     setSubRegionsPerRegion(parseInt(e.target.value) || 1)
                   }
+                  className="border-2 focus:border-blue-500"
                 />
                 <p className="text-xs text-muted-foreground">
                   Sub-divisions within each region
@@ -226,7 +231,24 @@ export default function Home() {
               </div>
 
               <div className="space-y-2">
-                <Label>VLANs per Site</Label>
+                <Label className="text-sm font-semibold">Total Sites Needed</Label>
+                <Input
+                  type="number"
+                  min={1}
+                  max={100000}
+                  value={sitesNeeded}
+                  onChange={(e) =>
+                    setSitesNeeded(parseInt(e.target.value) || 1)
+                  }
+                  className="border-2 focus:border-blue-500"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Expected number of sites
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">VLANs per Site</Label>
                 <Input
                   type="number"
                   min={1}
@@ -235,6 +257,7 @@ export default function Home() {
                   onChange={(e) =>
                     setVlansPerSite(parseInt(e.target.value) || 1)
                   }
+                  className="border-2 focus:border-blue-500"
                 />
                 <p className="text-xs text-muted-foreground">
                   Network segments per location
@@ -243,10 +266,10 @@ export default function Home() {
             </div>
 
             {/* VLAN Size */}
-            <div className="space-y-3">
+            <div className="space-y-3 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700 rounded-lg border-2 border-blue-100 dark:border-blue-900/50">
               <div className="flex justify-between items-center">
-                <Label>VLAN Subnet Size: /{vlanSize}</Label>
-                <Badge variant="secondary">
+                <Label className="text-base font-semibold">VLAN Subnet Size: /{vlanSize}</Label>
+                <Badge variant="secondary" className="text-sm px-3 py-1">
                   {CIDRMath.formatSize(CIDRMath.usableHosts(vlanSize))} hosts
                 </Badge>
               </div>
@@ -266,25 +289,28 @@ export default function Home() {
             </div>
 
             {/* Regional Bias */}
-            <div className="space-y-4 pt-4 border-t">
+            <div className="space-y-4 pt-6 border-t-2">
               <div className="flex justify-between items-center">
                 <div>
-                  <h3 className="font-semibold">Regional Capacity Bias</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="text-lg font-bold flex items-center gap-2">
+                    <span className="text-blue-600">⚖️</span>
+                    Regional Capacity Bias
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-1">
                     Allocate more addresses to regions with higher ratios
                   </p>
                 </div>
-                <Badge variant="outline">Total Ratio: {totalRatio}</Badge>
+                <Badge variant="outline" className="text-base px-4 py-2">Total Ratio: {totalRatio}</Badge>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {Array.from({ length: regionCount }).map((_, i) => (
-                  <div key={i} className="space-y-2 p-3 bg-muted/30 rounded-lg">
+                  <div key={i} className="space-y-3 p-4 bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-700 rounded-lg border-2 border-blue-200 dark:border-blue-800 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-center">
-                      <Label className="font-semibold">
+                      <Label className="font-bold text-base">
                         {REGION_NAMES[i] || `Region ${i + 1}`}
                       </Label>
-                      <Badge variant="secondary" className="font-mono text-xs">
+                      <Badge variant="secondary" className="font-mono text-sm px-3 py-1">
                         {regionRatios[i]}x (
                         {((regionRatios[i] / totalRatio) * 100).toFixed(0)}%)
                       </Badge>
@@ -299,7 +325,7 @@ export default function Home() {
                       step={1}
                       className="w-full"
                     />
-                    <div className="flex justify-between text-xs text-muted-foreground">
+                    <div className="flex justify-between text-xs font-medium text-muted-foreground">
                       <span>1x</span>
                       <span>2x</span>
                       <span>4x</span>
@@ -311,8 +337,8 @@ export default function Home() {
             </div>
 
             {/* Calculate Button */}
-            <Button onClick={calculate} className="w-full" size="lg">
-              <Network className="w-4 h-4 mr-2" />
+            <Button onClick={calculate} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all" size="lg">
+              <Network className="w-5 h-5 mr-2" />
               Calculate Subnet Hierarchy
             </Button>
           </CardContent>
@@ -364,70 +390,70 @@ export default function Home() {
             )}
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card className="border-2 border-blue-200 dark:border-blue-800 shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader className="pb-3 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30">
+                  <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Site Prefix
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
+                <CardContent className="pt-4">
+                  <div className="text-3xl font-bold text-blue-600">
                     /{result.sitePrefixRecommendation}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-muted-foreground mt-2">
                     {result.totalSubnetsPerSite} VLANs per site
                   </p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
+              <Card className="border-2 border-green-200 dark:border-green-800 shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader className="pb-3 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30">
+                  <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Total Sites
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
+                <CardContent className="pt-4">
+                  <div className="text-3xl font-bold text-green-600">
                     {result.totalSitesSupported.toLocaleString()}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-muted-foreground mt-2">
                     Across all regions
                   </p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
+              <Card className="border-2 border-purple-200 dark:border-purple-800 shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader className="pb-3 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30">
+                  <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Utilization
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   <div
-                    className={`text-2xl font-bold ${getUtilizationColor(
+                    className={`text-3xl font-bold ${getUtilizationColor(
                       result.utilizationPercentage
                     )}`}
                   >
                     {result.utilizationPercentage.toFixed(1)}%
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Based on 1000 sites needed
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Based on {sitesNeeded.toLocaleString()} sites needed
                   </p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
+              <Card className="border-2 border-orange-200 dark:border-orange-800 shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader className="pb-3 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/30 dark:to-amber-900/30">
+                  <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Regions
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
+                <CardContent className="pt-4">
+                  <div className="text-3xl font-bold text-orange-600">
                     {result.summary.totalRegions}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-muted-foreground mt-2">
                     {result.summary.totalSubRegions} territories
                   </p>
                 </CardContent>
@@ -435,58 +461,60 @@ export default function Home() {
             </div>
 
             {/* Detailed Results Tabs */}
-            <Card>
+            <Card className="shadow-xl border-2 border-blue-100 dark:border-blue-900/50">
               <Tabs defaultValue="breakdown" className="w-full">
-                <CardHeader>
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="breakdown">
-                      Regional Breakdown
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700">
+                  <TabsList className="grid w-full grid-cols-2 h-12">
+                    <TabsTrigger value="breakdown" className="text-base font-semibold">
+                      📊 Regional Breakdown
                     </TabsTrigger>
-                    <TabsTrigger value="hierarchy">Full Hierarchy</TabsTrigger>
+                    <TabsTrigger value="hierarchy" className="text-base font-semibold">🌐 Full Hierarchy</TabsTrigger>
                   </TabsList>
                 </CardHeader>
 
                 <CardContent>
                   <TabsContent value="breakdown" className="space-y-4">
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto rounded-lg border-2 border-blue-100 dark:border-blue-900/50">
                       <table className="w-full">
                         <thead>
-                          <tr className="border-b">
-                            <th className="text-left p-3 font-semibold">
+                          <tr className="border-b-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-700">
+                            <th className="text-left p-4 font-bold">
                               Region
                             </th>
-                            <th className="text-left p-3 font-semibold">
+                            <th className="text-left p-4 font-bold">
                               CIDR
                             </th>
-                            <th className="text-right p-3 font-semibold">
+                            <th className="text-right p-4 font-bold">
                               Ratio
                             </th>
-                            <th className="text-right p-3 font-semibold">
+                            <th className="text-right p-4 font-bold">
                               Sites
                             </th>
-                            <th className="text-right p-3 font-semibold">
+                            <th className="text-right p-4 font-bold">
                               % of Total
                             </th>
                           </tr>
                         </thead>
                         <tbody>
-                          {result.summary.regionBreakdown.map((r) => (
+                          {result.summary.regionBreakdown.map((r, idx) => (
                             <tr
                               key={r.name}
-                              className="border-b hover:bg-muted/50"
+                              className={`border-b hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors ${
+                                idx % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-blue-50/30 dark:bg-slate-800/30'
+                              }`}
                             >
-                              <td className="p-3">
-                                <Badge variant="outline">{r.name}</Badge>
+                              <td className="p-4">
+                                <Badge variant="outline" className="text-sm font-semibold">{r.name}</Badge>
                               </td>
-                              <td className="p-3 font-mono text-sm">
+                              <td className="p-4 font-mono text-sm font-medium">
                                 {r.cidr}
                               </td>
-                              <td className="text-right p-3">{r.ratio}x</td>
-                              <td className="text-right p-3 font-mono">
+                              <td className="text-right p-4 font-semibold">{r.ratio}x</td>
+                              <td className="text-right p-4 font-mono font-semibold">
                                 {r.sitesCapacity.toLocaleString()}
                               </td>
-                              <td className="text-right p-3">
-                                <Badge variant="secondary">
+                              <td className="text-right p-4">
+                                <Badge variant="secondary" className="font-semibold">
                                   {r.percentage.toFixed(1)}%
                                 </Badge>
                               </td>
