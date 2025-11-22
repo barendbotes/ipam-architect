@@ -1,23 +1,23 @@
 # IPAM Architect 🌐
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Built With](https://img.shields.io/badge/built%20with-Next.js%2014-black)
-![Styling](https://img.shields.io/badge/styling-Tailwind%20CSS-38B2AC)
-![Status](https://img.shields.io/badge/status-Active-green)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen?style=for-the-badge&logo=vercel)](https://cidr.botesnetworks.co.za)
+![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)
+![Built With](https://img.shields.io/badge/built%20with-Next.js%2016-black?style=for-the-badge)
+
+> **Try the live application here: [cidr.botesnetworks.co.za](https://cidr.botesnetworks.co.za)**
 
 **A modern, hierarchical IPv4 subnet calculator designed for Network Architects and Engineers.**
 
 Stop calculating subnets in Excel. IPAM Architect automates the design of global network allocations, ensuring zero overlap while accounting for regional growth and standardization constraints.
 
-![App Screenshot](https://via.placeholder.com/1200x600.png?text=IPAM+Architect+Dashboard+Screenshot)
-*(Replace this link with an actual screenshot of your application)*
+![App Screenshot](https://cidr.botesnetworks.co.za/screenshot2.png)
 
 ## 🚀 Key Features
 
 *   **Hierarchical Allocation:** Automatically divides a Supernet (e.g., `10.0.0.0/8`) down to Regions, Territories, and individual Sites.
 *   **Zero-Overlap Math:** Built-in logic ensures that no two regions or sites ever share address space.
 *   **Capacity Planning:** Visualize utilization percentages based on your site requirements. See exactly when you'll run out of IPs.
-*   **Weighted Distribution:** allocating more space to high-growth regions (e.g., give "North America" 2x the capacity of "Europe") using a simple slider interface.
+*   **Weighted Distribution:** Allocating more space to high-growth regions (e.g., give "North America" 2x the capacity of "Europe") using a simple slider interface.
 *   **VLAN Standardization:** Define standard templates (e.g., "Every site gets 5 VLANs") and visualize the exact CIDR blocks for a standard site.
 *   **Interactive Visualization:** Explore your network tree with a collapsible hierarchy view.
 *   **JSON Export:** Copy your entire allocation structure to clipboard for use in documentation or automation scripts.
@@ -43,7 +43,7 @@ Stop calculating subnets in Excel. IPAM Architect automates the design of global
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/ipam-architect.git
+    git clone https://github.com/barendbotes/ipam-architect.git
     cd ipam-architect
     ```
 
