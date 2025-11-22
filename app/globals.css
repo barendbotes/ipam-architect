@@ -118,7 +118,13 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-size: 17px;
+    font-size: 18px;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
   }
   
   /* Increase font sizes for better readability */
