@@ -63,7 +63,6 @@ export class DynamicSubnetCalculator {
   ): { requiredPrefix: number; recommendation: string } {
     const projectedSites = siteCount * growthBuffer;
     const { prefix: currentSupPrefix } = CIDRMath.parseCIDR(this.supernet);
-    const vlanSnapshot = this.getSnapshot();
 
     const subnetsNeeded = BigInt(projectedSites) * BigInt(1); // 1 subnet per site (adjust as needed)
     let testPrefix = currentSupPrefix;

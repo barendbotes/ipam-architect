@@ -100,7 +100,7 @@ export class HierarchicalAllocator {
 
     // Calculate required bits for VLANs
     const bitsNeeded = Math.ceil(Math.log2(vlansPerSite));
-    let sitePrefix = vlanSize - bitsNeeded;
+    const sitePrefix = vlanSize - bitsNeeded;
 
     // Ensure we don't go below reasonable limits
     if (sitePrefix < 16) {
