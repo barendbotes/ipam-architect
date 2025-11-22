@@ -25,7 +25,7 @@ Stop calculating subnets in Excel. IPAM Architect automates the design of global
 
 ## 🛠️ Technology Stack
 
-*   **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
+*   **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
 *   **Language:** TypeScript
 *   **Styling:** Tailwind CSS
 *   **UI Components:** [Shadcn/ui](https://ui.shadcn.com/) (Radix Primitives)
@@ -36,7 +36,9 @@ Stop calculating subnets in Excel. IPAM Architect automates the design of global
 
 ### Prerequisites
 
-*   Node.js 18.17 or later
+*   Node.js 20.9 or later
+*   TypeScript 5.1 or later
+*   React 19.2 or later
 *   npm, pnpm, or yarn
 
 ### Installation
