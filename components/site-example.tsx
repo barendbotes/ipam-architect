@@ -201,19 +201,25 @@ export function SiteExample(props: SiteExampleProps) {
             {siteExample.cidr}
           </Badge>
         </CardHeader>
-        <CardContent className="pt-6">
+<CardContent className="pt-6">
             <div className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {siteExample.vlans.map((vlan, index) => (
                         <div key={vlan.cidr} className="group relative overflow-hidden rounded-xl border bg-background/50 p-4 transition-all hover:shadow-lg hover:border-primary/40 hover:-translate-y-0.5">
-                            <div className="absolute right-0 top-0 p-3 opacity-5 group-hover:opacity-100 transition-opacity duration-500">
-                                {index === 0 ? <Server className="w-10 h-10 text-primary" /> : 
-                                 index === 1 ? <MonitorSmartphone className="w-10 h-10 text-primary" /> :
-                                 <Laptop className="w-10 h-10 text-primary" />}
+                            {/* FIXED: Moved icon to bottom-right (-bottom-2 -right-2) to avoid text overlap */}
+                            <div className="absolute -bottom-2 -right-2 p-3 opacity-5 group-hover:opacity-10 transition-opacity duration-500 rotate-12">
+                                {index === 0 ? <Server className="w-16 h-16 text-primary" /> : 
+                                 index === 1 ? <MonitorSmartphone className="w-16 h-16 text-primary" /> :
+                                 <Laptop className="w-16 h-16 text-primary" />}
                             </div>
+                            
                             <div className="flex justify-between items-center mb-3 relative z-10">
-                                <Badge variant="outline" className="bg-primary/5 border-primary/10 text-primary text-[10px] font-bold">VLAN {index + 1}</Badge>
-                                <span className="text-[10px] font-mono text-muted-foreground font-medium">{vlan.usableHosts} hosts</span>
+                                <Badge variant="outline" className="bg-primary/5 border-primary/10 text-primary text-[10px] font-bold">
+                                    VLAN {index + 1}
+                                </Badge>
+                                <span className="text-[10px] font-mono text-muted-foreground font-medium bg-background/80 backdrop-blur-sm px-1.5 py-0.5 rounded">
+                                    {vlan.usableHosts} hosts
+                                </span>
                             </div>
                             <div className="font-mono text-base font-bold tracking-tight relative z-10">{vlan.cidr}</div>
                             <div className="text-[10px] text-muted-foreground font-mono mt-1.5 truncate relative z-10 opacity-80">
